@@ -9,8 +9,8 @@ export function AddNewBook({booklist,setBooklist}) {
     const [bookauthor,setBookauthor]=useState('');
     const [bookquote,setBookquote]=useState('');
     const [bookcategory,setBookcategory]=useState('');
-    const [bookpic, setBookpic] = useState(Book.bpic_url);
-  const [booksummary,setBooksummary]=useState(Book.bsummary);
+    const [bookpic, setBookpic] = useState('');
+  const [booksummary,setBooksummary]=useState('');
     const history=useHistory();
     return (
 <div>
