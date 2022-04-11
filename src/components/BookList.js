@@ -3,7 +3,7 @@ import * as ReactBootStrap from "react-bootstrap";
 import IconButton from '@mui/material/IconButton';
 import {GrView} from "react-icons/gr";
 import {MdDelete} from "react-icons/md";
-import EditIcon from '@mui/icons-material/Edit';
+import {AiOutlineEdit} from "react-icons/ai";
 import { useHistory } from "react-router-dom";
 export function BookList({booklist,setBooklist}) {
   const history=useHistory();
@@ -21,20 +21,14 @@ export function BookList({booklist,setBooklist}) {
           </tr>
         </thead>
         <tbody>
-          {booklist.map(({bid,bname,author}, index) => (
+          {booklist.map(({bid,bname,author}, index) => ( 
             <BookListTableView bid={bid} name={bname} author={author} 
-            // deletebutton={<IconButton onClick={()=>{
-            //   const copyBooklist=[...booklist];
-            //   copyBooklist.splice(index,1);
-            //   setBooklist(copyBooklist);
-            // }}><MdDelete/></IconButton>} 
-            deletebutton={<button onClick={()=>{
-                const copyBooklist=[...booklist];
-                copyBooklist.splice(index,1);
-                setBooklist(copyBooklist);
-              }} >
-            delete
-            </button>}
+            id={index}
+            deletebutton={<IconButton onClick={()=>{
+              const copyBooklist=[...booklist];
+              copyBooklist.splice(index,1);
+              setBooklist(copyBooklist);
+            }}><MdDelete/></IconButton>} 
             editbutton={<IconButton
               aria-label="Edit"
               color="secondary"
@@ -43,8 +37,15 @@ export function BookList({booklist,setBooklist}) {
                 history.push(`/editbookdetail/${index}`)
               }}
             >
-              <EditIcon />
+              <AiOutlineEdit/>
             </IconButton>}
+            viewmore={
+              <IconButton color="primary" aria-label="Viewmore"
+              onClick={() => {
+                history.push(`/bookdetail/${index}`)
+              }}
+            ><GrView /></IconButton>
+            }
             />
           ))}
         </tbody>
@@ -53,14 +54,14 @@ export function BookList({booklist,setBooklist}) {
   );
 }
 
-function BookListTableView({ bid, name, author , deletebutton }) {
+function BookListTableView({ bid, name, author , deletebutton ,editbutton,viewmore}) {
   return (
         <tr>
           <td>{bid}</td>
           <td>{name}</td>
           <td>{author}</td>
-          <td></td>
-          <td></td>
+          <td>{viewmore}</td>
+          <td>{editbutton}</td>
           <td>{deletebutton}</td>
         </tr>
   );

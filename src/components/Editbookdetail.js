@@ -1,11 +1,12 @@
+import '../styles/Editbookdetail.css';
 import { useState } from 'react';
 import { useHistory, useParams } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 export function Editbookdetail({booklist,setBooklist}) {
-  const { id } = useParams();
-  const Book = booklist[id];
+  const { index } = useParams();
+  const Book = booklist[index];
   console.log(Book);
   const history = useHistory();
   const [bookid,setBookid]=useState(Book.bid);
@@ -17,7 +18,7 @@ export function Editbookdetail({booklist,setBooklist}) {
   const [booksummary,setBooksummary]=useState(Book.bsummary);
   return (
     <div>
-      <div>
+      <div className='Editbookdetails'>
         <TextField id="outlined-basic"
           label="BookId"
           variant="outlined"
@@ -69,7 +70,7 @@ export function Editbookdetail({booklist,setBooklist}) {
               bsummary:booksummary
             };
             const copyBooklist = [...booklist];
-            copyBooklist[id] = updatedBook;
+            copyBooklist[index] = updatedBook;
             setBooklist(copyBooklist);
             history.push("/booklist");
           }}

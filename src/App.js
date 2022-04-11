@@ -4,6 +4,7 @@ import { BookList } from "./components/BookList";
 import { AddNewBook } from "./components/AddNewBook";
 import { BookDetails } from "./components/BookDetails";
 import { Editbookdetail } from "./components/Editbookdetail";
+import {Home} from "./components/Home";
 import { useState } from "react";
 import { Link, Route, Switch } from "react-router-dom";
 
@@ -45,15 +46,14 @@ function App() {
         <li><Link to='/'>Home</Link></li>
         <li><Link to="/booklist">ListBook</Link></li>
         <li><Link to="/addnewbook">AddNewBook</Link></li>
-        <li><Link to="/Bookdetails">BookDetails</Link></li>
         </ul>
       </div>
       <Switch>
-        <Route  exact path='/'><h1>home</h1></Route>
+        <Route  exact path='/'><Home/></Route>
         <Route  path="/booklist"><BookList booklist={booklist} setBooklist={setBooklist} /></Route>
         <Route  path="/addnewbook"><AddNewBook booklist={booklist} setBooklist={setBooklist}/></Route>
-        <Route path='/Bookdetails'><BookDetails booklist={booklist}/></Route>
         <Route path='/editbookdetail/:index'><Editbookdetail booklist={booklist} setBooklist={setBooklist}/></Route>
+        <Route path="/bookdetail/:index"><BookDetails booklist={booklist}/></Route>
       </Switch>
     </div>
   );

@@ -1,7 +1,9 @@
+import "../styles/AddNewBook.css";
 import {useState} from "react";
 import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
 import { useHistory } from "react-router-dom";
+
 
 export function AddNewBook({booklist,setBooklist}) {
     const [bookid,setBookid]=useState();
@@ -14,7 +16,7 @@ export function AddNewBook({booklist,setBooklist}) {
     const history=useHistory();
     return (
 <div>
-      <div>
+      <div className="AddnewBook_Form">
         <TextField id="outlined-basic" label="Enter BookID" variant="outlined" value={bookid}
           onChange={(event) => setBookid(event.target.value)} />
         <TextField id="outlined-basic" label="Enter BookName" variant="outlined" value={bookname}
@@ -50,7 +52,7 @@ export function AddNewBook({booklist,setBooklist}) {
            setBooklist(CopyBooklist);
            history.push('/booklist');
           }}
-        >Add Book</Button>
+        >AddBook</Button>
       </div>
 </div>
     );

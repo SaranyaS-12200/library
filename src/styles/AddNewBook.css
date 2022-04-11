@@ -1,0 +1,6 @@
+.AddnewBook_Form{
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    margin: 16px;
+}

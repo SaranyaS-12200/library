@@ -14,9 +14,9 @@ import { red } from '@mui/material/colors';
 
 export function BookDetails({ booklist }) {
     const history = useHistory();
-    const { id } = useParams();
-    console.log(id, booklist);
-    const Book = booklist[id];
+    const { index } = useParams();
+    console.log(index, booklist);
+    const Book = booklist[index];
     return (
       <div>
         
