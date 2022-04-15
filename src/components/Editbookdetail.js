@@ -5,8 +5,8 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
 export function Editbookdetail({booklist,setBooklist}) {
-  const { index } = useParams();
-  const Book = booklist[index];
+  const { id } = useParams();
+  const Book = booklist[id];
   console.log(Book);
   const history = useHistory();
   const [bookid,setBookid]=useState(Book.bid);
@@ -70,7 +70,7 @@ export function Editbookdetail({booklist,setBooklist}) {
               bsummary:booksummary
             };
             const copyBooklist = [...booklist];
-            copyBooklist[index] = updatedBook;
+            copyBooklist[id] = updatedBook;
             setBooklist(copyBooklist);
             history.push("/booklist");
           }}

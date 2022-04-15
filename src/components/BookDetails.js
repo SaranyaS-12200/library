@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { useHistory, useParams } from "react-router-dom";
+import { useEffect } from 'react';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
@@ -9,14 +10,22 @@ import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
+import { useState } from 'react';
 
-
-
-export function BookDetails({ booklist }) {
-    const history = useHistory();
-    const { index } = useParams();
-    console.log(index, booklist);
-    const Book = booklist[index];
+export function BookDetails() {
+  const [book,setBook]=useState({});
+  const history = useHistory();
+  const { id } = useParams();
+  useEffect(()=>{
+    fetch(`https://my-json-server.typicode.com/SaranyaS-12200/librarylist/booklist/${id}`,{method:"GET"})
+    .then((data)=>data.json())
+    .then((data)=>setBook(data))
+    // .catch((err)=>console.log(err));
+  },[]);
+ 
+  // useEffect(() => {fetch(`API/${id}`,{method: "GET",}) // promise.then((data) => data.json()) // Response object.then((mv) => setMovie(mv));}, []);
+    // console.log(id,booklist);
+    // const Book = {};
     return (
       <div>
         
@@ -27,18 +36,18 @@ export function BookDetails({ booklist }) {
               B
             </Avatar>
           }
-          title={Book.bname}
+          title={book.bname}
           
         />
         <CardMedia
           component="img"
           height="194"
-          image={Book.bpic_url}
-          alt={Book.name}
+          image={book.bpic_url}
+          alt={book.name}
         />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            {Book.bsummary}
+            {book.bsummary}
           </Typography>
         </CardContent>
       </Card>
