@@ -3,9 +3,10 @@ import {useState} from "react";
 import TextField from "@mui/material/TextField";
 import Button from '@mui/material/Button';
 import { useHistory } from "react-router-dom";
+import { API } from "./global";
 
 
-export function AddNewBook({booklist,setBooklist}) {
+export function AddNewBook() {
     const [bookid,setBookid]=useState();
     const [bookname,setBookname]=useState('');
     const [bookauthor,setBookauthor]=useState('');
@@ -14,6 +15,31 @@ export function AddNewBook({booklist,setBooklist}) {
     const [bookpic, setBookpic] = useState('');
   const [booksummary,setBooksummary]=useState('');
     const history=useHistory();
+  
+    const Addbook=()=>{
+      const newBook={
+        bid: bookid,
+        bname:bookname ,
+        author: bookauthor,
+        quote:bookquote ,
+        category: bookcategory,
+        bpicurl:bookpic,
+        bsummary:booksummary
+      };
+
+      //1.method must be POST
+      //2.body-JSON data
+      //3.headers- JSON data
+fetch(`${API}/booklist`,{
+method:"POST",
+body:JSON.stringify(newBook),
+headers:{
+"Content-Type":"application/json"
+}
+}).then(()=> history.push('/booklist'));
+    
+    };
+
     return (
 <div>
       <div className="AddnewBook_Form">
@@ -37,23 +63,23 @@ export function AddNewBook({booklist,setBooklist}) {
           value={booksummary}
           onChange={(event) => setBooksummary(event.target.value)} />
         <Button variant="contained"
-          onClick={()=>{
-            const newBook={
-              bid: bookid,
-              bname:bookname ,
-              author: bookauthor,
-              quote:bookquote ,
-              category: bookcategory,
-              bpic_url:bookpic,
-              bsummary:booksummary
-            };
-          
-           const CopyBooklist= [...booklist,newBook]; 
-           setBooklist(CopyBooklist);
-           history.push('/booklist');
+          onClick={()=>{ Addbook();
+          //  const CopyBooklist= [...booklist,newBook]; 
+          //  setBooklist(CopyBooklist);
           }}
         >AddBook</Button>
       </div>
 </div>
     );
   }
+
+  //1.method must be POST
+  //2.body-JSON data
+  //3.headers- JSON data
+// fetch(`${API}/booklist`,{
+//   method:"POST",
+//   body:JSON.stringify(data),
+//   headers:{
+//     "Content-Type":"application/json"
+//   }
+// })

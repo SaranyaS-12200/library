@@ -11,13 +11,16 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import { useState } from 'react';
+import {API} from "./global";
 
 export function BookDetails() {
   const [book,setBook]=useState({});
   const history = useHistory();
   const { id } = useParams();
   useEffect(()=>{
-    fetch(`https://my-json-server.typicode.com/SaranyaS-12200/librarylist/booklist/${id}`,{method:"GET"})
+    fetch(`${API}/booklist/${id}`,{
+      method:"GET"
+    })
     .then((data)=>data.json())
     .then((data)=>setBook(data))
     // .catch((err)=>console.log(err));
@@ -42,7 +45,7 @@ export function BookDetails() {
         <CardMedia
           component="img"
           height="194"
-          image={book.bpic_url}
+          image={book.bpicurl}
           alt={book.name}
         />
         <CardContent>

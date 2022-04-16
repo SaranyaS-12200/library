@@ -7,8 +7,8 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { useHistory } from "react-router-dom";
 import {useState} from "react";
 import { useEffect } from "react";
+import { API } from "./global";
 
-const API="https://my-json-server.typicode.com/SaranyaS-12200/librarylist";
 
 export function BookList() {
   const [booklist, setBooklist] = useState([]);
@@ -67,7 +67,7 @@ export function BookList() {
                   color="secondary"
                   onClick={() => {
                     console.log(index);
-                    history.push(`/editbookdetail/${index}`);
+                    history.push(`/editbookdetail/${id}`);
                   }}
                 >
                   <AiOutlineEdit />

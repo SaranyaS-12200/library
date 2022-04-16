@@ -3,22 +3,67 @@ import { useState } from 'react';
 import { useHistory, useParams } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { useEffect } from 'react';
+import { API } from './global';
 
-export function Editbookdetail({booklist,setBooklist}) {
+export function Editbookdetail() {
   const { id } = useParams();
-  const Book = booklist[id];
-  console.log(Book);
-  const history = useHistory();
-  const [bookid,setBookid]=useState(Book.bid);
-  const [bookname,setBookname]=useState(Book.bname);
-  const [bookauthor,setBookauthor]=useState(Book.author);
-  const [bookquote,setBookquote]=useState(Book.quote);
-  const [bookcategory,setBookcategory]=useState(Book.category);
-  const [bookpic, setBookpic] = useState(Book.bpic_url);
-  const [booksummary,setBooksummary]=useState(Book.bsummary);
+  // const Book = booklist[id];
+  // console.log(Book);
+  const [book,setBook]=useState(null);
+
+  useEffect(()=>{
+    fetch(`${API}/booklist/${id}`,{
+      method:"GET"
+    })
+    .then((data)=>data.json())
+    .then((data)=>setBook(data))
+    .catch((err)=>console.log(err));
+  },[]);
+  
   return (
     <div>
-      <div className='Editbookdetails'>
+      {book ? <EditBookForm book={book}/> : <h2>loading.....</h2>}
+    </div>
+  );
+}
+
+function EditBookForm({book}){
+  const [bookid,setBookid]=useState(book.bid);
+  const [bookname,setBookname]=useState(book.bname);
+  const [bookauthor,setBookauthor]=useState(book.author);
+  const [bookquote,setBookquote]=useState(book.quote);
+  const [bookcategory,setBookcategory]=useState(book.category);
+  const [bookpic, setBookpic] = useState(book.bpicurl);
+  const [booksummary,setBooksummary]=useState(book.bsummary);
+  const history = useHistory();
+
+  const editBook=()=>{
+    console.log(bookid,bookname,bookauthor,bookcategory,bookquote,booksummary,bookpic);
+    const updatedBook = {
+      bid: bookid,
+      bname:bookname ,
+      author: bookauthor,
+      quote:bookquote ,
+      category: bookcategory,
+      bpicurl:bookpic,
+      bsummary:booksummary
+    };
+    
+    //1. method must be PUT & pass id
+    // 2. body - JSON data
+    // 3. headers - JSON data
+    // After PUT is complete -> movie to /movies
+    fetch(`${API}/booklist/${book.id}`,{
+      method:"PUT",
+      body:JSON.stringify(updatedBook),
+      headers:{
+      "Content-Type":"application/json"
+      }
+      }).then(()=> history.push('/booklist'));
+  }
+  return (
+    <div className='Editbookdetails'>
         <TextField id="outlined-basic"
           label="BookId"
           variant="outlined"
@@ -57,25 +102,13 @@ export function Editbookdetail({booklist,setBooklist}) {
         <Button
           variant="contained"
           color="success"
-          onClick={() => {
-            console.log(bookid,bookname,bookauthor,bookcategory,bookquote,booksummary,bookpic);
-
-            const updatedBook = {
-              bid: bookid,
-              bname:bookname ,
-              author: bookauthor,
-              quote:bookquote ,
-              category: bookcategory,
-              bpic_url:bookpic,
-              bsummary:booksummary
-            };
-            const copyBooklist = [...booklist];
-            copyBooklist[id] = updatedBook;
-            setBooklist(copyBooklist);
-            history.push("/booklist");
+          onClick={() => {editBook()
+            // const copyBook = [...book];
+            // copyBook[id] = updatedBook;
+            // setBook(copyBook);
+            // history.push("/booklist");
           }}
         >Save BookDetails</Button>
       </div>
-    </div>
   );
 }

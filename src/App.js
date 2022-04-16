@@ -18,7 +18,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function App() {
   
-  const [booklist, setBooklist] = useState(IBookList);
+  // const [booklist, setBooklist] = useState(IBookList);
   const history=useHistory();
   return (
 
@@ -49,8 +49,8 @@ function App() {
       <Switch>
         <Route  exact path='/'><Home/></Route>
         <Route  path="/booklist"><BookList/></Route>
-        <Route  path="/addnewbook"><AddNewBook booklist={booklist} setBooklist={setBooklist}/></Route>
-        <Route path='/editbookdetail/:id'><Editbookdetail booklist={booklist} setBooklist={setBooklist}/></Route>
+        <Route  path="/addnewbook"><AddNewBook/></Route>
+        <Route path='/editbookdetail/:id'><Editbookdetail/></Route>
         <Route path="/bookdetail/:id"><BookDetails/></Route>
       </Switch>
     </div>
